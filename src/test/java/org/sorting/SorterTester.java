@@ -8,18 +8,19 @@ import java.io.IOException;
 
 public class SorterTester
 {
-    
     public static void TestRandom(Sorter sorter, int size, String loggingPath)
     {
         var logger = new Logger();
         var failed = false;
         var arrayGenerator = new ArrayGenerator(size);
+        
         for (int i = 0; i < 50000; i++)
         {
             int[] feld = arrayGenerator.generateRandomArray();
             var currentFailed = CheckAndLog(sorter, feld, logger);
             failed = failed || currentFailed;
         }
+        
         try
         {
             logger.Write(loggingPath);
@@ -60,14 +61,13 @@ public class SorterTester
     }
     
     
-    
-    
     public static void TestSorterAllOrders(Sorter sorter, int size, String loggingPath)
     {
         var logger = new Logger();
         var failed = false;
+        var arrayGenerator = new ArrayGenerator(size);
         
-        for (int[] feld : new ArrayGenerator(size).generateAllOrders(0, size - 1))
+        for (int[] feld : arrayGenerator.generateAllOrders(0, size - 1))
         {
             var currentFailed = CheckAndLog(sorter, feld, logger);
             failed = failed || currentFailed;
@@ -80,6 +80,6 @@ public class SorterTester
         catch (IOException _)
         {
         }
-        Assertions.assertFalse(failed, "To See failures check "+new File(loggingPath).getAbsolutePath());
+        Assertions.assertFalse(failed, "To See failures check " + new File(loggingPath).getAbsolutePath());
     }
 }

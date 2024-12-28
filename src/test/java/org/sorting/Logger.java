@@ -56,12 +56,12 @@ public class Logger
     }
     
     
-    public record Entry(int[] feld, int[] sortedFeld, boolean isSorted)
+    public record Entry(int[] feld, int[] sortedFeld, boolean failed)
     {
         @Override
         public String toString()
         {
-            return String.format("%s;%s;%s", Main.parseStringArray(feld), Main.parseStringArray(sortedFeld), isSorted);
+            return String.format("%s;%s;%s", Main.parseStringArray(feld), Main.parseStringArray(sortedFeld), failed);
         }
     }
 }

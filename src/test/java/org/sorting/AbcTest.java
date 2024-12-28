@@ -1,29 +1,32 @@
 package org.sorting;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
+import java.io.File;
+import java.io.IOException;
+
+import static org.sorting.SorterTester.TestRandom;
+import static org.sorting.SorterTester.TestSorterAllOrders;
 
 
 public class AbcTest
 {
+    
     @Test
-    public void Abc()
+    public void AbcRandom()
     {
-        for (int i = 1; i < 200; i++)
-        {
-            int[] feld = randomArray(i);
-            var sorted= Arrays.stream(feld).sorted().toArray();
-            Bubble.abc(feld);
-            assert Arrays.equals(feld, sorted);
-        }
+        Sorter sorter = Bubble::abc;
+        var size = 6;
+        
+        TestRandom(sorter, size,"src\\test\\resources\\AbcRandom.log");
     }
     
-    private int[] randomArray(int size) {
-        int[] array = new int[size];
-        for (int i = 0; i < size; i++) {
-            array[i] = (int) (Math.random() * Integer.MAX_VALUE);
-        }
-        return array;
+    @Test
+    public void AbcAllOrders()
+    {
+        Sorter sorter = Bubble::abc;
+        TestSorterAllOrders(sorter, 6,"src\\test\\resources\\AbcAllOrders.log");
     }
+    
 }

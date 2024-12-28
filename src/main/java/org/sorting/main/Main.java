@@ -35,7 +35,7 @@ public class Main
     }
     
     
-    private static int[] parseIntArray(String line)
+    public static int[] parseIntArray(String line)
     {
         if (line.isEmpty())
         {
@@ -46,4 +46,10 @@ public class Main
         return Arrays.stream(split).limit(6).mapToInt(Integer::parseInt).toArray();
     }
     
+    public static String parseStringArray(int[] array)
+    {
+        return Arrays.stream(array).mapToObj(String::valueOf).reduce("",(result,element)->{
+            return result + " " + element;
+        }).trim();
+    }
 }

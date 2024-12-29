@@ -45,7 +45,7 @@ public class ArrayGenerator
             {
                 if (last[i] != upperBound)
                 {
-                    next[i] = last[i] + 1;
+                    next[i] += 1;
                     break;
                 }
                 next[i] = lowerBound;

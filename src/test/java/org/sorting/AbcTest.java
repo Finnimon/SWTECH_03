@@ -5,8 +5,7 @@ import org.junit.jupiter.api.TestFactory;
 
 import java.util.stream.Stream;
 
-import static org.sorting.SorterTester.TestRandom;
-import static org.sorting.SorterTester.TestSorterAllOrders;
+import static org.sorting.SorterTester.*;
 
 
 public class AbcTest
@@ -24,5 +23,4 @@ public class AbcTest
     {
         return TestSorterAllOrders(Bubble::abc, SIZE);
     }
-    
 }

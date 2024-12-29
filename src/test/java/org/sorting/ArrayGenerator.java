@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 public class ArrayGenerator
 {
-    private int size;
+    private final int size;
     
     
     public ArrayGenerator(int size)
@@ -38,7 +38,7 @@ public class ArrayGenerator
         var orders = new ArrayList<int[]>((int)Math.pow(upperBound - lowerBound+1, size));
         orders.add(Arrays.stream(new int[size]).map(i -> lowerBound).toArray());
         var last = orders.getLast();
-        for (int j = 1; j < Math.pow(upperBound - lowerBound+1, size); j++)
+        for (long j = 1; j < Math.pow((long)upperBound - lowerBound+1, size); j++)
         {
             var next = last.clone();
             

@@ -55,24 +55,4 @@ public class SorterTester
                              .map(x -> DynamicTest.dynamicTest(Main.parseStringArray(x),
                                                                () -> Assertions.assertTrue(CheckSorter(sorter, x))));
     }
-    
-    
-    private static Runnable TestRunnable(int position, int coreCount, Sorter sorter, ArrayList<int[]> arrangements,
-                                         ArrayList<DynamicTest> container)
-    {
-        return () ->
-        {
-            var chunkSize = arrangements.size() / coreCount;
-            var start = position * chunkSize;
-            var to = start + chunkSize;
-            for (int i = start; i < to; i++)
-            {
-                var x = arrangements.get(i);
-                var test = DynamicTest.dynamicTest(Main.parseStringArray(x),
-                                                   () -> Assertions.assertTrue(CheckSorter(sorter, x)));
-                container.add(test);
-            }
-        };
-        
-    }
 }

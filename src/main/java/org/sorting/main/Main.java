@@ -28,7 +28,7 @@ public class Main
             var array = parseIntArray(line);
             Bubble.abc(array);
             System.out.println("Sorted:\t" +
-                               Arrays.toString(array) +
+                               Main.parseStringArray(array) +
                                "\n\nPlease enter a six digit array to be sorted in the following format: 1 2 3 4 5 6" +
                                ".\nAlternatively enter an empty line to exit.");
         }
@@ -37,19 +37,17 @@ public class Main
     
     public static int[] parseIntArray(String line)
     {
-        if (line.isEmpty())
+        if (line.isBlank())
         {
             return new int[0];
         }
-        var split = line.split(" ");
+        var split = line.trim().split(" ");
         
         return Arrays.stream(split).limit(6).mapToInt(Integer::parseInt).toArray();
     }
     
     public static String parseStringArray(int[] array)
     {
-        return Arrays.stream(array).mapToObj(String::valueOf).reduce("",(result,element)->{
-            return result + " " + element;
-        }).trim();
+        return Arrays.stream(array).mapToObj(String::valueOf).reduce("",(result,element)-> result + " " + element).trim();
     }
 }

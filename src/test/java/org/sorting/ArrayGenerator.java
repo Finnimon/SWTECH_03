@@ -20,7 +20,9 @@ public class ArrayGenerator
         int[] array = new int[size];
         for (int i = 0; i < size; i++)
         {
-            array[i] = (int) (Math.random() * Integer.MAX_VALUE);
+            var rand=Math.random();
+            array[i] = (int) ( rand* Integer.MAX_VALUE);
+            array[i]=rand<0.5?array[i]:-array[i];
         }
         return array;
     }
@@ -39,7 +41,6 @@ public class ArrayGenerator
         for (int j = 1; j < Math.pow(upperBound - lowerBound+1, size); j++)
         {
             var next = last.clone();
-            var overFlow = false;
             
             for (int i = 0; i < size; i++)
             {
@@ -49,7 +50,6 @@ public class ArrayGenerator
                     break;
                 }
                 next[i] = lowerBound;
-                overFlow = true;
             }
             last = next;
             orders.add(next);

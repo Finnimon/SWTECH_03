@@ -1,49 +1,46 @@
 package org.sorting;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DynamicTest;
+import org.sorting.main.Main;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.stream.Stream;
 
 
 public class SorterTester
 {
-    public static void TestRandom(Sorter sorter, int size, String loggingPath)
+    public static Stream<DynamicTest> TestRandom(Sorter sorter, int size)
     {
-        var logger = new Logger();
-        var failed = false;
         var arrayGenerator = new ArrayGenerator(size);
-        
+        var list = new ArrayList<int[]>();
         for (int i = 0; i < 50000; i++)
         {
             int[] feld = arrayGenerator.generateRandomArray();
-            var currentFailed = CheckAndLog(sorter, feld, logger);
-            failed = failed || currentFailed;
+            list.add(feld);
         }
         
-        try
-        {
-            logger.Write(loggingPath);
-        }
-        catch (IOException _)
-        {
-        }
-        Assertions.assertFalse(failed, "To See failures check " + new File(loggingPath).getAbsolutePath());
+        return list.stream()
+                   .map(x -> DynamicTest.dynamicTest(Main.parseStringArray(x),
+                                                     () -> Assertions.assertTrue(CheckSorter(sorter, x))));
     }
     
     
-    private static boolean CheckAndLog(Sorter sorter, int[] feld, Logger logger)
+    public static Stream<DynamicTest> TestSorterAllOrders(Sorter sorter, int size)
     {
-        var sorted = feld.clone();
-        var currentFailed = !CheckSorter(sorter, sorted);
-        logger.log(feld, sorted, currentFailed);
-        return currentFailed;
+        var arrayGenerator = new ArrayGenerator(size);
+        
+        return arrayGenerator.generateAllOrders(0, size - 1).stream()
+                             .map(x -> DynamicTest.dynamicTest(Main.parseStringArray(x),
+                                                               () -> Assertions.assertTrue(CheckSorter(sorter, x))));
     }
     
     
     private static boolean CheckSorter(Sorter sorter, int[] feld)
     {
-        Bubble.abc(feld);
+        sorter.sort(feld);
         return isSorted(feld);
     }
     
@@ -58,28 +55,5 @@ public class SorterTester
             }
         }
         return true;
-    }
-    
-    
-    public static void TestSorterAllOrders(Sorter sorter, int size, String loggingPath)
-    {
-        var logger = new Logger();
-        var failed = false;
-        var arrayGenerator = new ArrayGenerator(size);
-        
-        for (int[] feld : arrayGenerator.generateAllOrders(0, size - 1))
-        {
-            var currentFailed = CheckAndLog(sorter, feld, logger);
-            failed = failed || currentFailed;
-        }
-        
-        try
-        {
-            logger.Write(loggingPath);
-        }
-        catch (IOException _)
-        {
-        }
-        Assertions.assertFalse(failed, "To See failures check " + new File(loggingPath).getAbsolutePath());
     }
 }

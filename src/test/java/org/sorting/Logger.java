@@ -9,7 +9,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Deprecated
 public class Logger
 {
     public final List<Entry> log;

@@ -1,11 +1,10 @@
 package org.sorting;
 
-public class Bubble
+public final class Bubble
 {
     private Bubble()
     {
     }
-    
     
     public static void abc(int[] feld)
     {

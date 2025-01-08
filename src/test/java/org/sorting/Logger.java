@@ -1,7 +1,5 @@
 package org.sorting;
 
-import org.sorting.main.Main;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -47,8 +45,8 @@ public class Logger
         for (var line : lines)
         {
             var split = line.split(";");
-            var feld = Main.parseIntArray(split[0]);
-            var sortedFeld = Main.parseIntArray(split[1]);
+            var feld = ArrayParser.parseIntArray(split[0]);
+            var sortedFeld = ArrayParser.parseIntArray(split[1]);
             var isSorted = Boolean.parseBoolean(split[2]);
             logger.log(feld, sortedFeld, isSorted);
         }
@@ -61,7 +59,7 @@ public class Logger
         @Override
         public String toString()
         {
-            return String.format("%s;%s;%s", Main.parseStringArray(feld), Main.parseStringArray(sortedFeld), failed);
+            return String.format("%s;%s;%s", ArrayParser.parseStringArray(feld), ArrayParser.parseStringArray(sortedFeld), failed);
         }
     }
 }

@@ -6,7 +6,6 @@ import org.junit.jupiter.api.DynamicTest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.stream.Stream;
 
 
@@ -25,30 +24,6 @@ public class SorterTester
         return SorterTestStream(arrays, sorter);
     }
     
-    public static Stream<DynamicTest> TestSorterAllOrders(Sorter sorter, int size)
-    {
-        var arrayGenerator = new ArrayGenerator(size);
-        
-        return SorterTestStream(arrayGenerator.generateAllOrders(0, size - 1), sorter);
-    }
-    
-    
-    public static Stream<DynamicTest> TestSpecialOrders(Sorter sorter, int size)
-    {
-        var generator=new ArrayGenerator(size);
-        var arrays = new ArrayList<int[]>();
-        arrays.add(generator.sorted());
-        arrays.add(generator.reverseSorted());
-        
-        return SorterTestStream(arrays,sorter);
-    }
-    
-    public static Stream<DynamicTest> TestExtremeNumbers(Sorter sorter, int size)
-    {
-        var arrayGenerator = new ArrayGenerator(size);
-        
-        return SorterTestStream(arrayGenerator.generateExtremeNumbers(), sorter);
-    }
     
     private static Stream<DynamicTest> SorterTestStream(Collection<int[]> arrayGenerator, Sorter sorter)
     {
@@ -57,16 +32,24 @@ public class SorterTester
                                                                () -> CheckSorter(sorter, x)));
     }
     
-
     
     public static void CheckSorter(Sorter sorter, int[] feld)
     {
-        var actual=feld.clone();
+        var actual = feld.clone();
         sorter.sort(actual);
-        if (isSorted(actual)) return;
-        var expected=feld.clone();
+        if (isSorted(actual))
+        {
+            return;
+        }
+        var expected = feld.clone();
         Arrays.sort(expected);
-        Assertions.assertArrayEquals(expected, actual,"Attempted to sort:\t"+ArrayParser.parseStringArray(feld));
+        var message = "Attempted to sort:\t" +ArrayParser.parseStringArray(feld)+
+                      "\nExpected:\t" +
+                      ArrayParser.parseStringArray(expected) +
+                      "\nActual:\t\t" +
+                      ArrayParser.parseStringArray(feld) +
+                      "\n";
+        Assertions.assertArrayEquals(expected, actual, message);
         
     }
     
@@ -84,5 +67,31 @@ public class SorterTester
     }
     
     
-
+    public static Stream<DynamicTest> TestSorterAllOrders(Sorter sorter, int size)
+    {
+        var arrayGenerator = new ArrayGenerator(size);
+        
+        return SorterTestStream(arrayGenerator.generateAllOrders(0, size - 1), sorter);
+    }
+    
+    
+    public static Stream<DynamicTest> TestSpecialOrders(Sorter sorter, int size)
+    {
+        var generator = new ArrayGenerator(size);
+        var arrays = new ArrayList<int[]>();
+        arrays.add(generator.sorted());
+        arrays.add(generator.reverseSorted());
+        
+        return SorterTestStream(arrays, sorter);
+    }
+    
+    
+    public static Stream<DynamicTest> TestExtremeNumbers(Sorter sorter, int size)
+    {
+        var arrayGenerator = new ArrayGenerator(size);
+        
+        return SorterTestStream(arrayGenerator.generateExtremeNumbers(), sorter);
+    }
+    
+    
 }

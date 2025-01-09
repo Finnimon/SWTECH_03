@@ -143,7 +143,7 @@ public class SorterTester
                       "\nExpected:\t" +
                       ArrayParser.parse(expected) +
                       "\nActual:\t\t" +
-                      ArrayParser.parse(feld) +
+                      ArrayParser.parse(actual) +
                       "\n";
         Assertions.assertArrayEquals(expected, actual, message);
     }

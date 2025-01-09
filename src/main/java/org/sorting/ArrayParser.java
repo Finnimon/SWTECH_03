@@ -12,11 +12,14 @@ public final class ArrayParser
     /**
      * Private constructor to prevent instantiation.
      */
-    private ArrayParser() {}
+    private ArrayParser()
+    {
+    }
     
     
     /**
      * Parses a string representing a csv array, delimited by spaces, to an array of integers.
+     *
      * @param string The string to parse.
      * @return The parsed array.
      */
@@ -34,11 +37,15 @@ public final class ArrayParser
     
     /**
      * Parses an array of integers to a string representing a csv array, delimited by spaces.
+     *
      * @param array The array to parse.
      * @return The parsed string.
      */
     public static String parse(int[] array)
     {
-        return Arrays.stream(array).mapToObj(String::valueOf).reduce("",(result,element)-> result + " " + element).trim();
+        return Arrays.stream(array)
+                     .mapToObj(String::valueOf)
+                     .reduce("", (result, element) -> result + " " + element)
+                     .trim();
     }
 }

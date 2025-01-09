@@ -26,7 +26,10 @@ public class Main
                 return;
             }
             var array = ArrayParser.parse(line);
-            if (array.length != 6) throw new IllegalArgumentException("Invalid array length: " + array.length);
+            if (array.length != 6)
+            {
+                throw new IllegalArgumentException("Invalid array length: " + array.length);
+            }
             var message = "Unsorted:\t" + ArrayParser.parse(array);
             System.out.println(message);
             Bubble.abc(array);

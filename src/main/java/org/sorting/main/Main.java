@@ -25,10 +25,13 @@ public class Main
             {
                 return;
             }
-            var array = ArrayParser.parseIntArray(line);
+            var array = ArrayParser.parse(line);
+            if (array.length != 6) throw new IllegalArgumentException("Invalid array length: " + array.length);
+            var message = "Unsorted:\t" + ArrayParser.parse(array);
+            System.out.println(message);
             Bubble.abc(array);
-            System.out.println("Sorted:\t" +
-                               ArrayParser.parseStringArray(array) +
+            System.out.println("Sorted:\t\t" +
+                               ArrayParser.parse(array) +
                                "\n\nPlease enter a six digit array to be sorted in the following format: 1 2 3 4 5 6" +
                                ".\nAlternatively enter an empty line to exit.");
         }

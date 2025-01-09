@@ -45,8 +45,8 @@ public class Logger
         for (var line : lines)
         {
             var split = line.split(";");
-            var feld = ArrayParser.parseIntArray(split[0]);
-            var sortedFeld = ArrayParser.parseIntArray(split[1]);
+            var feld = ArrayParser.parse(split[0]);
+            var sortedFeld = ArrayParser.parse(split[1]);
             var isSorted = Boolean.parseBoolean(split[2]);
             logger.log(feld, sortedFeld, isSorted);
         }
@@ -59,7 +59,7 @@ public class Logger
         @Override
         public String toString()
         {
-            return String.format("%s;%s;%s", ArrayParser.parseStringArray(feld), ArrayParser.parseStringArray(sortedFeld), failed);
+            return String.format("%s;%s;%s", ArrayParser.parse(feld), ArrayParser.parse(sortedFeld), failed);
         }
     }
 }

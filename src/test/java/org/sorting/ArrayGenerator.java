@@ -3,20 +3,65 @@ package org.sorting;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.Random;
 
 
+/**
+ * Provides methods for generating arrays for testing purposes.
+ */
 public class ArrayGenerator
 {
+    /**
+     * The size of arrays to create
+     */
     private final int size;
     
     
+    /**
+     * A random number generator.
+     */
+    private final Random random = new Random();
+    
+    
+    /**
+     * Default constructor.
+     *
+     * @param size The size of arrays to create
+     */
     public ArrayGenerator(int size)
     {
+        if (size <= 0)
+        {
+            throw new IllegalArgumentException("Out of bounds, choose an integer greater than 0.");
+        }
         this.size = size;
     }
     
     
+    /**
+     * Generates arrays of size three populated only with extreme values.
+     * The resulting arrays are in the form [min, 0, max] and shuffled.
+     *
+     * @return The generated arrays.
+     */
+    public static Collection<int[]> generateExtremeNumbers()
+    {
+        var arrays = new ArrayList<int[]>();
+        arrays.add(new int[]{ Integer.MIN_VALUE, 0, Integer.MAX_VALUE });
+        arrays.add(new int[]{ Integer.MAX_VALUE, 0, Integer.MIN_VALUE });
+        arrays.add(new int[]{ Integer.MIN_VALUE, Integer.MAX_VALUE, 0 });
+        arrays.add(new int[]{ Integer.MAX_VALUE, Integer.MIN_VALUE, 0 });
+        arrays.add(new int[]{ 0, Integer.MIN_VALUE, Integer.MAX_VALUE });
+        arrays.add(new int[]{ 0, Integer.MAX_VALUE, Integer.MIN_VALUE });
+        return arrays;
+    }
+    
+    
+    /**
+     * Creates an already sorted array.
+     *
+     * @return The sorted array.
+     */
     public int[] sorted()
     {
         var array = new int[size];
@@ -28,6 +73,11 @@ public class ArrayGenerator
     }
     
     
+    /**
+     * Creates reversed sorted array.
+     *
+     * @return The reversed sorted array
+     */
     public int[] reverseSorted()
     {
         var array = new int[size];
@@ -39,31 +89,30 @@ public class ArrayGenerator
     }
     
     
+    /**
+     * Generates an array filled with random integers.
+     *
+     * @return The generated array.
+     */
     public int[] generateRandomArray()
     {
         int[] array = new int[size];
         for (int i = 0; i < size; i++)
         {
-            var rand = Math.random();
-            array[i] = (int) (rand * Integer.MAX_VALUE);
-            array[i] = rand < 0.5 ? array[i] : -array[i];
-        }
-        return array;
-    }
-    
-    public int[] generateRandomFromSet(int[] set)
-    {
-        var array = new int[size];
-        for (int i = 0; i < size; i++)
-        {
-            var rand = Math.random();
-            int index= (int) Math.floor(rand * set.length);
-            array[i] = set[index];
+            array[i] = random.nextInt();
         }
         return array;
     }
     
     
+    /**
+     * Generates all possible orders of arrays of size {@code size},
+     * populated only with numbers in the inclusive range {@code lowerBound} to inclusive {@code upperBound}.
+     * @param lowerBound The inclusive lower bound of the array values.
+     * @param upperBound The inclusive upper bound of the array values.
+     * @return All possible
+     * @see org.junit.jupiter.api.TestFactory
+     */
     public ArrayList<int[]> generateAllOrders(int lowerBound, int upperBound)
     {
         if (lowerBound > upperBound)
@@ -73,10 +122,10 @@ public class ArrayGenerator
         int count = (int) Math.pow(upperBound - lowerBound + 1, size);
         var orders = new ArrayList<int[]>(count);
         orders.add(new int[size]);
-        var last = orders.getLast();
-        Arrays.fill(last, lowerBound);
+        Arrays.fill(orders.getLast(), lowerBound);
         for (long j = 1; j < count; j++)
         {
+            var last = orders.getLast();
             var next = last.clone();
             
             for (int i = 0; i < size; i++)
@@ -88,24 +137,9 @@ public class ArrayGenerator
                 }
                 next[i] = lowerBound;
             }
-            last = next;
             orders.add(next);
         }
         return orders;
-    }
-    
-    
-    public Collection<int[]> generateExtremeNumbers()
-    {
-        var set=new int[]{Integer.MIN_VALUE,0, Integer.MAX_VALUE};
-        var arrays=new ArrayList<int[]>();
-        arrays.add(new int[]{Integer.MIN_VALUE,0,Integer.MAX_VALUE});
-        arrays.add(new int[]{Integer.MAX_VALUE,0,Integer.MIN_VALUE});
-        arrays.add(new int[]{Integer.MIN_VALUE,Integer.MAX_VALUE,0});
-        arrays.add(new int[]{Integer.MAX_VALUE,Integer.MIN_VALUE,0});
-        arrays.add(new int[]{0,Integer.MIN_VALUE,Integer.MAX_VALUE});
-        arrays.add(new int[]{0,Integer.MAX_VALUE,Integer.MIN_VALUE});
-        return arrays;
     }
     
     

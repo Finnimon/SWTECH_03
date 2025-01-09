@@ -6,6 +6,11 @@ public final class Bubble
     {
     }
     
+    
+    /**
+     * Das gegebene Programm abc()
+     * @param feld das zu sortierende Array.
+     */
     public static void abc(int[] feld)
     {
         int temp;
@@ -24,3 +29,4 @@ public final class Bubble
         } while (temp != feld[0]);
     }
 }
+
